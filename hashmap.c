@@ -94,7 +94,7 @@ void eraseMap(HashMap * map,  char * key) {
         Pair *pair = map->buckets[idx];
         if (pair == NULL) return;
         if (pair->key != NULL && is_equal(pair->key, key)) {
-            pair->key = NULL; // Marcar como eliminado
+            pair->key = NULL;
             map->size--;
             return;
         }
@@ -116,7 +116,12 @@ Pair * searchMap(HashMap * map,  char * key) {
 }
 
 Pair * firstMap(HashMap * map) {
-
+    for (long i = 0; i < map->capacity; i++) {
+        if (map->buckets[i] != NULL && map->buckets[i]->key != NULL) {
+            map->current = i;
+            return map->buckets[i];
+        }
+    }
     return NULL;
 }
 
