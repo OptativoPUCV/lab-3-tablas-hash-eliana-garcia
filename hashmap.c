@@ -58,7 +58,6 @@ void insertMap(HashMap * map, char * key, void * value) {
             return;
         }
     }
-
 }
 
 void enlarge(HashMap * map) {
@@ -94,8 +93,16 @@ void eraseMap(HashMap * map,  char * key) {
 }
 
 Pair * searchMap(HashMap * map,  char * key) {   
-
-
+    long pos = hash(key, map->capacity);
+    for (int i = 0; i < map->capacity; i++) {
+        long idx = (pos + i) % map->capacity;
+        Pair *pair = map->buckets[idx];
+        if (pair == NULL) return NULL; 
+        if (pair->key != NULL && is_equal(pair->key, key)) {
+            map->current = idx;
+            return pair;
+        }
+    }
     return NULL;
 }
 
